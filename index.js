@@ -76,6 +76,7 @@ function getUserPAT(createFile = false) {
 	});
 
 	function processPat(pat) {
+		process.env.GITLAB_PAT = pat;
 		fs.readFile((!createFile ? './.env' : './.env.sample'), { encoding: 'utf8' }, (err1, data1) => {
 			if (err1) throw err1;
 
@@ -84,7 +85,6 @@ function getUserPAT(createFile = false) {
 
 			fs.writeFile('./.env', newEnvFile, (err2) => {
 				if (err2) throw err2;
-				require('dotenv').config();
 
 				getListOfSizes();
 			});
@@ -129,7 +129,7 @@ function askSizes() {
 	});
 	question += 'Type the corresponding number: ';
 	r1.question(question, (answer) => {
-		const version = Number.isInteger(answer) ? Number(answer) : stratumVersions.length - 1;
+		const version = Number.isNaN(parseInt(answer)) ? (stratumVersions.length - 1) : parseInt(answer);
 		console.log(successColor('Installing ' + stratumVersions[version].name));
 		installStratum(version, stratumVersions[version].name);
 
@@ -140,13 +140,14 @@ function askSizes() {
 	});
 }
 
+const oldFolderReg = /^Stratum\-\d+x\-master(\-(\w|\d)+)?$/i;
+
 function installStratum(version, name) {
 	console.log('Checking for old stratum to remove');
 
 	fs.readdir(texturePackDirectory, function (err, files) {
 		if (err) throw err;
 
-		const oldFolderReg = /^Stratum\-\d+x\-master(\-(\w|\d)+)?$/i;
 		let exists = false;
 		files.forEach(function (fileName) {
 			if (oldFolderReg.test(fileName)) {
@@ -199,6 +200,19 @@ function installStratum(version, name) {
 				fs.unlink(texturePackDirectory + '/' + newFileName, (err) => {
 					if (err) throw err;
 					console.log(successColor('Deleted stratum archive'));
+				});
+				fs.readdir(texturePackDirectory, function (err, files) {
+					if (err) throw err;
+
+					files.forEach(function (fileName) {
+						if (oldFolderReg.test(fileName)) {
+							fs.rename(texturePackDirectory + '/' + fileName + '/', texturePackDirectory + '/' + name + '-master/', (err2) => {
+								if (err2) throw err2;
+
+								console.log(successColor('Renamed stratum folder'));
+							});
+						}
+					});
 				});
 			}));
 		}
