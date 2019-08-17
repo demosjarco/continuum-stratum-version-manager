@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js"
+		"start": "node index.js",
+		"update": "npm update && npm audit fix && npm prune"
 	},
 	"repository": {
 		"type": "git",
