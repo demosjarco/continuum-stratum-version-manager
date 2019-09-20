@@ -11,7 +11,19 @@ const filePathColor = chalk.bgRgb(21, 101, 192).white;
 const linkColor = chalk.underline;
 
 function minecraftDirectory() {
-	return process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
+	switch (require('os').platform()) {
+		case 'darwin':
+			// ~/Library/Application Support/minecraft
+			return process.env.HOME.replace(/\\/g, "/") + '/Library/Application Support/minecraft';
+		case 'linux':
+			// ~/.minecraft
+			return process.env.HOME.replace(/\\/g, "/") + '/.minecraft';
+		case 'win32':
+			// %appdata%\.minecraft
+			return process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
+		default:
+			return null;
+	}
 }
 function configLocation(includeFilePath = true) {
 	const root = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
