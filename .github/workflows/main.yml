@@ -21,7 +21,7 @@ jobs:
     - run: ls -lA
     - name: Install glob for release
       run: npm install glob -D
-    - name: Release
+    - name: Upload to Releases
       uses: softprops/action-gh-release@v1
       with:
         files: continuum-stratum-version-manager
@@ -41,7 +41,7 @@ jobs:
     - run: ls -lA
     - name: Install glob for release
       run: npm install glob -D
-    - name: Release
+    - name: Upload to Releases
       uses: softprops/action-gh-release@v1
       with:
         files: |
@@ -64,7 +64,7 @@ jobs:
     - run: ls -lA continuum-stratum-version-manager-mac.app/
     - name: Install glob for release
       run: npm install glob -D
-    - name: Release
+    - name: Upload to Releases
       uses: softprops/action-gh-release@v1
       with:
         files: continuum-stratum-version-manager
