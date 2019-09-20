@@ -31,6 +31,8 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:lin
     - run: ls -lA
+    - name: Install glob for release
+      run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@master
       with:
@@ -49,6 +51,8 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:win
     - run: ls -lA
+    - name: Install glob for release
+      run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@master
       with:
@@ -69,6 +73,8 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:mac
     - run: ls -lA
+    - name: Install glob for release
+      run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@master
       with:
