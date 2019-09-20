@@ -13,18 +13,51 @@ const linkColor = chalk.underline;
 function minecraftDirectory() {
 	return process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
 }
-function configLocation() {
-	return process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : process.env.HOME + "/.local/share");
+function configLocation(includeFilePath = true) {
+	const root = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : process.env.HOME + "/.local/share");
+	return root.replace(/\\/g, "/") + '/' + require('./package.json').name + (includeFilePath ? '/config.json' : '');
 }
 
 const config = {};
+function readConfig() {
+	return JSON.parse(fs.readFileSync(configLocation())).gitlab_token;
+}
+function saveConfig(token) {
+	try {
+		fs.writeFileSync(configLocation(), JSON.stringify({ gitlab_token: token }, null, 4));
+	} catch (err) {
+		throw err;
+	}
+}
 Object.defineProperty(config, 'gitlab_token', {
-	enumerable: true,
 	get: () => {
-
+		try {
+			fs.accessSync(configLocation(), fs.constants.R_OK | fs.constants.W_OK);
+			return readConfig();
+		} catch (err) {
+			if (err.code === 'ENOENT') {
+				return null;
+			} else {
+				warningColor("Config file is read only. Personal access token will not be saved");
+				return readConfig();
+			}
+		}
 	},
-	set: () => {
+	set: (token) => {
+		try {
+			fs.accessSync(configLocation(false), fs.constants.X_OK | fs.constants.W_OK);
+			saveConfig(token);
+		} catch (err) {
+			if (err.code === 'ENOENT') {
+				fs.mkdir(configLocation(false), (err1) => {
+					if (err1) throw err1;
 
+					saveConfig(token);
+				});
+			} else {
+				warningColor("Config folder is read only. Personal access token will not be saved");
+			}
+		}
 	}
 });
 
@@ -56,22 +89,12 @@ function checkIfTexturePackFolderGood() {
 
 function checkIfPATavailable() {
 	console.log('Checking if personal access token for gitlab is set');
-	if (process.env.GITLAB_PAT) {
+	if (config.gitlab_token) {
 		console.log(successColor('got it'));
 		getListOfSizes();
 	} else {
 		console.log(errorColor('none found'));
-		fs.access('./.env', fs.constants.W_OK, (err1) => {
-			if (err1) {
-				if (err1.code === 'ENOENT') {
-					getUserPAT(true);
-				} else {
-					console.error(errorColor('is read-only'));
-				}
-			} else {
-				getUserPAT();
-			}
-		});
+		getUserPAT();
 	}
 }
 
@@ -93,19 +116,8 @@ function getUserPAT(createFile = false) {
 	});
 
 	function processPat(pat) {
-		process.env.GITLAB_PAT = pat;
-		fs.readFile((!createFile ? './.env' : './.env.sample'), { encoding: 'utf8' }, (err1, data1) => {
-			if (err1) throw err1;
-
-			const editor = /(?<=GITLAB\_PAT\=).*/;
-			const newEnvFile = data1.replace(editor, pat);
-
-			fs.writeFile('./.env', newEnvFile, (err2) => {
-				if (err2) throw err2;
-
-				getListOfSizes();
-			});
-		});
+		config.gitlab_token = pat.length > 0 ? pat : null;
+		getListOfSizes();
 	}
 }
 
@@ -116,7 +128,7 @@ function getListOfSizes() {
 	request.get({
 		url: 'https://dl.continuum.graphics/api/v4/projects/',
 		headers: {
-			'Private-Token': process.env.GITLAB_PAT || ''
+			'Private-Token': config.gitlab_token || ''
 		}
 	}, function (error, response, body) {
 		if (error) throw error;
@@ -197,7 +209,7 @@ function installStratum(version, name) {
 			request({
 				url: link.replace(/http(?!s)/g, "https"),
 				headers: {
-					'Private-Token': process.env.GITLAB_PAT || ''
+					'Private-Token': config.gitlab_token || ''
 				}
 			}).on('response', function (response) {
 				fileSize = Number(response.headers['content-length']);
