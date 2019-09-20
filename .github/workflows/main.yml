@@ -1,11 +1,8 @@
 name: builder
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build_ubuntu:
     runs-on: ${{ matrix.os }}
@@ -26,7 +23,6 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
@@ -47,7 +43,6 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
             continuum-stratum-version-manager-x64.exe
@@ -70,7 +65,6 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
