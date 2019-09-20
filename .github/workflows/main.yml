@@ -11,6 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        script: [pkg:lin, pkg:win, pkg:mac]
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v1
@@ -20,4 +21,4 @@ jobs:
     - run: npm install
     - name: Uninstall unneeded dependencies
       run: npm uninstall nodemon -D
-    - run: npm run pkg
+    - run: npm run ${{ matrix.os }}
