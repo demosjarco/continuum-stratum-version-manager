@@ -61,12 +61,11 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:mac
     - run: ls -lA
-    - run: ls -lA continuum-stratum-version-manager-mac.app/
     - name: Install glob for release
       run: npm install glob -D
     - name: Upload to Releases
       uses: softprops/action-gh-release@v1
       with:
-        files: continuum-stratum-version-manager
+        files: continuum-stratum-version-manager-mac
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
