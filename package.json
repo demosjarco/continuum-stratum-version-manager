@@ -9,7 +9,8 @@
 		"dev": "nodemon index.js",
 		"pkg:lin": "pkg . --targets latest-x64",
 		"pkg:win": "pkg . --targets latest-x86,latest-x64",
-		"pkg:mac": "pkg . --targets latest-x64"
+		"pkg:mac": "pkg . --targets latest-x64",
+		"tag": "git commit --allow-empty -m \"Trigger v1.0.0 build\" && git tag v1.0.0 && git push --tags && git push origin v1.0.0"
 	},
 	"repository": {
 		"type": "git",
