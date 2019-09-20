@@ -6,7 +6,7 @@
 	"bin": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"pkg": "pkg . --targets latest-x64"
+		"pkg": "pkg . --targets latest-x64,latest-armv6,latest-armv7"
 	},
 	"repository": {
 		"type": "git",
