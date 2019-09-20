@@ -7,15 +7,6 @@ on:
     branches:
       - master
 jobs:
-  semver_taging:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPO_OWNER: demosjarco
   build_ubuntu:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -35,6 +26,7 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
@@ -55,6 +47,7 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
             continuum-stratum-version-manager-x64.exe
@@ -77,6 +70,7 @@ jobs:
       run: npm install glob -D
     - name: Release
       uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
