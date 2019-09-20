@@ -22,6 +22,11 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:lin
     - run: ls -lA
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: demosjarco
     - name: Release
       uses: softprops/action-gh-release@master
       if: startsWith(github.ref, 'refs/tags/')
@@ -41,6 +46,11 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:win
     - run: ls -lA
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: demosjarco
     - name: Release
       uses: softprops/action-gh-release@master
       if: startsWith(github.ref, 'refs/tags/')
@@ -62,6 +72,11 @@ jobs:
       run: npm uninstall nodemon -D
     - run: npm run pkg:mac
     - run: ls -lA
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: demosjarco
     - name: Release
       uses: softprops/action-gh-release@master
       if: startsWith(github.ref, 'refs/tags/')
