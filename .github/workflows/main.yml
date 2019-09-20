@@ -7,12 +7,11 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build_ubuntu:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        script: ['pkg:lin', 'pkg:win', 'pkg:mac']
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@master
@@ -21,5 +20,29 @@ jobs:
     - run: npm install
     - name: Uninstall unneeded dependencies
       run: npm uninstall nodemon -D
-    - run: npm run ${{ matrix.script }}
+    - run: npm run pkg:lin
+    - run: ls -lA
+  build_windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - name: Uninstall unneeded dependencies
+      run: npm uninstall nodemon -D
+    - run: npm run pkg:win
+    - run: ls -lA
+  build_mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - name: Uninstall unneeded dependencies
+      run: npm uninstall nodemon -D
+    - run: npm run pkg:mac
     - run: ls -lA
