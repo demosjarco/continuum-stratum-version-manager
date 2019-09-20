@@ -3,9 +3,13 @@ on:
   push:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build_ubuntu:
     runs-on: ${{ matrix.os }}
@@ -24,7 +28,6 @@ jobs:
     - run: ls -lA
     - name: Release
       uses: softprops/action-gh-release@master
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
@@ -43,7 +46,6 @@ jobs:
     - run: ls -lA
     - name: Release
       uses: softprops/action-gh-release@master
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: |
             continuum-stratum-version-manager-x64.exe
@@ -64,7 +66,6 @@ jobs:
     - run: ls -lA
     - name: Release
       uses: softprops/action-gh-release@master
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: continuum-stratum-version-manager
       env:
