@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const texturePackDirectory = minecraftDirectory() + '/resourcepacks';
 const errorColor = chalk.bold.red;
+const warningColor = chalk.bold.yellow;
 const successColor = chalk.green;
 const filePathColor = chalk.bgRgb(21, 101, 192).white;
 const linkColor = chalk.underline;
