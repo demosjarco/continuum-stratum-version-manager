@@ -1,6 +1,5 @@
 'use strict';
 
-require('dotenv').config();
 const chalk = require('chalk');
 const fs = require('fs');
 
@@ -10,6 +9,20 @@ const errorColor = chalk.bold.red;
 const successColor = chalk.green;
 const filePathColor = chalk.bgRgb(21, 101, 192).white;
 const linkColor = chalk.underline;
+
+function configLocation() {
+	return process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : process.env.HOME + "/.local/share");
+}
+
+const config = {};
+Object.defineProperty(config, 'gitlab_token', {
+	get: () => {
+
+	},
+	set: () => {
+
+	}
+});
 
 checkIfMinecraftInstalled();
 
