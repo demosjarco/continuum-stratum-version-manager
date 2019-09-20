@@ -7,9 +7,9 @@
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon index.js",
-		"pkg:lin": "pkg . --targets latest-x64",
+		"pkg:lin": "pkg . --targets latest-x64 --output continuum-stratum-version-manager-linux.deb",
 		"pkg:win": "pkg . --targets latest-x86,latest-x64",
-		"pkg:mac": "pkg . --targets latest-x64"
+		"pkg:mac": "pkg . --targets latest-x64 --output continuum-stratum-version-manager-mac.app"
 	},
 	"repository": {
 		"type": "git",
