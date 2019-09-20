@@ -34,7 +34,7 @@ jobs:
     - name: Install glob for release
       run: npm install glob -D
     - name: Release
-      uses: softprops/action-gh-release@master
+      uses: softprops/action-gh-release@v1
       with:
         files: continuum-stratum-version-manager
       env:
@@ -54,7 +54,7 @@ jobs:
     - name: Install glob for release
       run: npm install glob -D
     - name: Release
-      uses: softprops/action-gh-release@master
+      uses: softprops/action-gh-release@v1
       with:
         files: |
             continuum-stratum-version-manager-x64.exe
@@ -76,7 +76,7 @@ jobs:
     - name: Install glob for release
       run: npm install glob -D
     - name: Release
-      uses: softprops/action-gh-release@master
+      uses: softprops/action-gh-release@v1
       with:
         files: continuum-stratum-version-manager
       env:
