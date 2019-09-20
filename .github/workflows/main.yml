@@ -9,6 +9,7 @@ on:
 jobs:
   semver_taging:
     runs-on: ubuntu-latest
+    steps:
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@master
       env:
