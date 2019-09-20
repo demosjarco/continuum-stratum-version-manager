@@ -24,7 +24,7 @@ jobs:
     - name: Upload to Releases
       uses: softprops/action-gh-release@v1
       with:
-        files: continuum-stratum-version-manager
+        files: continuum-stratum-version-manager-linux
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build_windows:
