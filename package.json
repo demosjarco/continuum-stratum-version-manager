@@ -6,7 +6,7 @@
 	"bin": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"update": "npm update && npm audit fix && npm prune"
+		"pkg": "pkg . --targets latest-x64",
 	},
 	"repository": {
 		"type": "git",
