@@ -14,7 +14,7 @@ function minecraftDirectory() {
 	return process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
 }
 function configLocation(includeFilePath = true) {
-	const root = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : process.env.HOME + "/.local/share");
+	const root = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
 	return root.replace(/\\/g, "/") + '/' + require('./package.json').name + (includeFilePath ? '/config.json' : '');
 }
 
