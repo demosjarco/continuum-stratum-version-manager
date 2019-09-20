@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        script: [pkg:lin, pkg:win, pkg:mac]
+        script: ['pkg:lin', 'pkg:win', 'pkg:mac']
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v1
