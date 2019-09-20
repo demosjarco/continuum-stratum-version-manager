@@ -6,7 +6,7 @@
 	"bin": "index.js",
 	"scripts": {
 		"start": "node index.js",
-		"pkg": "pkg . --targets latest-x64",
+		"pkg": "pkg . --targets latest-x64"
 	},
 	"repository": {
 		"type": "git",
