@@ -3,9 +3,13 @@ on:
   push:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
 jobs:
   build_ubuntu:
     runs-on: ${{ matrix.os }}
