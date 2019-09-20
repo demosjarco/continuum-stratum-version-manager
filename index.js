@@ -16,6 +16,7 @@ function configLocation() {
 
 const config = {};
 Object.defineProperty(config, 'gitlab_token', {
+	enumerable: true,
 	get: () => {
 
 	},
