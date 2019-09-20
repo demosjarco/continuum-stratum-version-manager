@@ -3,13 +3,15 @@
 const chalk = require('chalk');
 const fs = require('fs');
 
-const minecraftDirectory = process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
-const texturePackDirectory = minecraftDirectory + '/resourcepacks';
+const texturePackDirectory = minecraftDirectory() + '/resourcepacks';
 const errorColor = chalk.bold.red;
 const successColor = chalk.green;
 const filePathColor = chalk.bgRgb(21, 101, 192).white;
 const linkColor = chalk.underline;
 
+function minecraftDirectory() {
+	return process.env.APPDATA.replace(/\\/g, "/") + '/.minecraft';
+}
 function configLocation() {
 	return process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : process.env.HOME + "/.local/share");
 }
@@ -29,11 +31,11 @@ checkIfMinecraftInstalled();
 
 function checkIfMinecraftInstalled() {
 	console.log('Checking if minecraft is installed');
-	fs.access(minecraftDirectory, fs.constants.X_OK | fs.constants.W_OK, (err1) => {
+	fs.access(minecraftDirectory(), fs.constants.X_OK | fs.constants.W_OK, (err1) => {
 		if (err1) {
-			console.error(filePathColor(minecraftDirectory) + ' ' + (err1.code === 'ENOENT' ? errorColor("doesn't exist") : errorColor('is read-only')));
+			console.error(filePathColor(minecraftDirectory()) + ' ' + (err1.code === 'ENOENT' ? errorColor("doesn't exist") : errorColor('is read-only')));
 		} else {
-			console.log(successColor('Found minecraft folder at ' + filePathColor(minecraftDirectory)));
+			console.log(successColor('Found minecraft folder at ' + filePathColor(minecraftDirectory())));
 			checkIfTexturePackFolderGood();
 		}
 	});
