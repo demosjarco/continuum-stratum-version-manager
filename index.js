@@ -111,6 +111,7 @@ function checkIfPATavailable() {
 }
 
 const rl = require('readline');
+let tempPat = '';
 
 function getUserPAT(createFile = false) {
 	const terminalLink = require('terminal-link');
@@ -129,6 +130,7 @@ function getUserPAT(createFile = false) {
 
 	function processPat(pat) {
 		config.gitlab_token = pat.length > 0 ? pat : null;
+		tempPat = pat.length > 0 ? pat : '';
 		getListOfSizes();
 	}
 }
@@ -140,7 +142,7 @@ function getListOfSizes() {
 	request.get({
 		url: 'https://dl.continuum.graphics/api/v4/projects/',
 		headers: {
-			'Private-Token': config.gitlab_token || ''
+			'Private-Token': config.gitlab_token || tempPat
 		}
 	}, function (error, response, body) {
 		if (error) throw error;
