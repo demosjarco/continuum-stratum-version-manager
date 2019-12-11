@@ -249,7 +249,7 @@ function installStratum(version, name) {
 
 					files.forEach(function (fileName) {
 						if (oldFolderReg.test(fileName)) {
-							fs.rename(texturePackDirectory + '/' + fileName + '/', texturePackDirectory + '/' + name + '-master/', (err2) => {
+							fs.rename(texturePackDirectory + '/' + fileName + '/', texturePackDirectory + '/' + name + '/', (err2) => {
 								if (err2) throw err2;
 
 								console.log(successColor('Renamed stratum folder'));
