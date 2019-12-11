@@ -23,13 +23,13 @@
 	"homepage": "https://github.com/demosjarco/continuum-stratum-version-manager#readme",
 	"dependencies": {
 		"adm-zip": "^0.4.13",
-		"chalk": "^2.4.2",
+		"chalk": "^3.0.0",
 		"request": "^2.88.0",
 		"rimraf": "^3.0.0",
 		"terminal-link": "^2.0.0"
 	},
 	"devDependencies": {
-		"nodemon": "^1.19.2",
-		"pkg": "^4.4.0"
+		"nodemon": "^2.0.1",
+		"pkg": "^4.4.1"
 	}
 }
